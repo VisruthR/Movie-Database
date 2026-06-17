@@ -1,0 +1,128 @@
+.popup {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  z-index: 9999;
+
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.content {
+  width: 100%;
+  max-width: 800px;
+  max-height: 90vh;
+  padding: 40px;
+  overflow-y: auto;
+
+  background: rgba(15, 15, 15, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 1);
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-muted) transparent;
+}
+
+.content::-webkit-scrollbar {
+  width: 6px;
+}
+.content::-webkit-scrollbar-thumb {
+  background-color: var(--text-muted);
+  border-radius: var(--radius-pill);
+}
+
+.content h2 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.content h2 span {
+  font-weight: 300;
+  color: var(--text-secondary);
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+}
+
+.content .rating {
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-bottom: 30px;
+  color: var(--text-primary);
+
+  display: inline-block;
+  padding: 6px 14px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+}
+
+.content .plot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.content .plot img {
+  flex: 0 0 240px;
+  width: 240px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--glass-border);
+}
+
+.content .plot p {
+  flex: 1;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  font-weight: 300;
+  min-width: 280px;
+}
+
+.content button {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  margin: 0 auto;
+  padding: 14px 28px;
+
+  background-color: var(--text-primary);
+  color: var(--bg-dark);
+  border: none;
+  border-radius: var(--radius-pill);
+
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.content button:hover {
+  background-color: var(--text-secondary);
+  transform: scale(1.05);
+}
+
+.content button:active {
+  transform: scale(0.95);
+}
+
+.content .popup-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content .popup-buttons .watchlist {
+  max-width: 220px;
+}
