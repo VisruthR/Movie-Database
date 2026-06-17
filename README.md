@@ -1,16 +1,11 @@
-# React + Vite
+# 🍿 Movie Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the Movie Dashboard! This is a sleek, modern web application built with React and Vite that lets you search for your favorite movies, view their details, and keep track of what you want to watch (or have already seen).
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Search & Discover:** Quickly search for any movie or TV show using the OMDb API.
+- **Detailed View:** Click on any movie poster to read the plot, check the release year, and see the IMDb rating.
+- **Personalized Lists:** Keep track of your binge-watching by adding movies to your "Watchlist" or marking them as "Seen".
+- **Persistent Data:** Your customized username and movie lists are saved directly to your browser's local storage, meaning your data stays right there even if you refresh the page!
+- **Glassmorphism UI:** A beautiful, responsive dark-mode design featuring glassmorphism effects and fluid animations.
