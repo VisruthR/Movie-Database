@@ -1,4 +1,6 @@
-# 🍿 Movie Dashboard Click This :- https://movie-database-xi-eight.vercel.app/
+# 🍿 Movie Dashboard
+
+**[👉 Click here to view the Live App 👈](https://movie-database-xi-eight.vercel.app/)**
 
 Welcome to the Movie Dashboard! This is a sleek, modern web application built with React and Vite that lets you search for your favorite movies, view their details, and keep track of what you want to watch (or have already seen).
 
