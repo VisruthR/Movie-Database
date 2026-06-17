@@ -36,7 +36,7 @@ function App() {
     }));
   };
 
-  const API = "http://www.omdbapi.com/?apikey=c25fe9b0";
+  const API = `https://www.omdbapi.com/?apikey=${import.meta.env.VITE_OMDB_API_KEY}`;
 
   const search = (e) => {
     if (e.key === "Enter") {
@@ -72,7 +72,6 @@ function App() {
   };
 
   const openPopup = (movie) => {
-    console.log(movie + " App");
     setLoading(true);
     setLoadingText("Loading movie details...");
     setState((prev) => ({ ...prev, selected: {} }));
@@ -80,7 +79,6 @@ function App() {
     axios(API + "&i=" + movie)
       .then(({ data }) => {
         const selected = data;
-        console.log(selected);
         setState((prev) => ({ ...prev, selected }));
       })
       .catch((err) => {
