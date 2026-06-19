@@ -126,3 +126,39 @@
 .content .popup-buttons .watchlist {
   max-width: 220px;
 }
+
+/* for phone screen */
+
+@media (max-width: 768px) {
+  .content {
+    padding: 24px 20px;
+  }
+
+  .content .plot {
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .content .plot img {
+    flex: none;
+    width: 100%;
+    max-width: 260px;
+    margin: 0 auto;
+  }
+
+  .content .plot p {
+    min-width: 0;
+    font-size: 1rem;
+  }
+
+  .content .popup-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .content button,
+  .content .popup-buttons .watchlist {
+    width: 100%;
+    max-width: 100%;
+  }
+}
