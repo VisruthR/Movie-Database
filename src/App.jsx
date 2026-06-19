@@ -1,13 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Search from "./components/search/Search.jsx";
 import Movies from "./components/movies/Movies.jsx";
 import Popup from "./components/popup/Popup.jsx";
 import Watchlist from "./features/components/watchlist/Watchlist.jsx";
 
+const API = `https://www.omdbapi.com/?apikey=${import.meta.env.VITE_OMDB_API_KEY}`;
+
 function App() {
   const [state, setState] = useState({
     query: "",
+    activeQuery: "",
     movies: [],
     selected: {},
   });
@@ -21,9 +24,70 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState("");
 
+  const [page, setPage] = useState(1);
+  const loaderRef = useRef(null);
+
   useEffect(() => {
     localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
   }, [savedMovies]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const target = entries[0];
+
+        if (target.isIntersecting) {
+          setPage((prev) => prev + 1);
+        }
+      },
+      {
+        root: null,
+        rootMargin: "50px",
+        threshold: 0.1,
+      },
+    );
+
+    const current = loaderRef.current;
+
+    if (current) {
+      observer.observe(current);
+    }
+
+    return () => {
+      if (current) observer.unobserve(current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (page === 1) return;
+    if (!state.activeQuery) return;
+
+    const fetchMoreMovies = async () => {
+      setLoading(true);
+      setLoadingText("Loading more movies...");
+
+      try {
+        const { data } = await axios(
+          `${API}&s=${state.activeQuery}&page=${page}`,
+        );
+        const newMovies = data.Search;
+
+        if (newMovies) {
+          setState((prev) => ({
+            ...prev,
+            movies: [...prev.movies, ...newMovies],
+          }));
+        }
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+        setLoadingText("");
+      }
+    };
+
+    fetchMoreMovies();
+  }, [page, state.activeQuery]);
 
   const showWatchlist = () => setCurrentView("watchlist");
   const showSearch = () => {
@@ -36,15 +100,16 @@ function App() {
     }));
   };
 
-  const API = `https://www.omdbapi.com/?apikey=${import.meta.env.VITE_OMDB_API_KEY}`;
-
   const search = (e) => {
     if (e.key === "Enter") {
       showSearch();
       setLoading(true);
       setLoadingText("Loading movies...");
 
-      axios(API + "&s=" + state.query)
+      setPage(1);
+      setState((prev) => ({ ...prev, activeQuery: state.query }));
+
+      axios(API + "&s=" + state.query + "&page=1")
         .then(({ data }) => {
           const movies = data.Search;
 
@@ -160,6 +225,7 @@ function App() {
             onAddWatchlist={onAddWatchlist}
           />
         )}
+        <div ref={loaderRef} style={{ height: "1px", width: "100%" }}></div>
         {loading && (
           <div className="loading-screen">
             <div className="loader" />
