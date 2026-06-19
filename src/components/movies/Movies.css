@@ -67,4 +67,8 @@
     font-size: 0.95rem;
     padding: 12px 10px;
   }
+
+  .movies .movie img {
+    filter: grayscale(0%) contrast(100%);
+  }
 }
