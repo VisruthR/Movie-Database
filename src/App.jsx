@@ -27,6 +27,8 @@ function App() {
   const [page, setPage] = useState(1);
   const loaderRef = useRef(null);
 
+  const [tostMessage, setTostMessage] = useState("");
+
   useEffect(() => {
     localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
   }, [savedMovies]);
@@ -97,12 +99,21 @@ function App() {
       query: "",
       movies: [],
       selected: {},
+      errorMsg: "",
     }));
   };
 
   const search = (e) => {
     if (e.key === "Enter") {
       showSearch();
+      setState((prev) => ({ ...prev, errorMsg: "" }));
+      if (!navigator.onLine) {
+        setTostMessage("You are offline");
+        setTimeout(() => {
+          setTostMessage("");
+        }, 5000);
+        return;
+      }
       setLoading(true);
       setLoadingText("Loading movies...");
 
@@ -116,8 +127,11 @@ function App() {
           if (movies) {
             setState((prev) => ({ ...prev, movies: movies }));
           } else {
-            alert("No movies found");
-            setState((prev) => ({ ...prev, movies: [] }));
+            setState((prev) => ({
+              ...prev,
+              movies: [],
+              errorMsg: "Movies not found",
+            }));
           }
         })
         .catch((err) => {
@@ -198,6 +212,7 @@ function App() {
 
   return (
     <div className="app">
+      {tostMessage && <div className="toast-message"> {tostMessage}</div>}
       <header>
         <h1 onClick={showSearch} style={{ cursor: "pointer" }}>
           Movie Database
@@ -213,9 +228,17 @@ function App() {
         {currentView === "watchlist" ? (
           <Watchlist savedMovies={savedMovies} openPopup={openPopup} />
         ) : (
-          state.movies.length > 0 && (
-            <Movies movies={state.movies} openPopup={openPopup} />
-          )
+          <>
+            {state.movies.length > 0 && (
+              <Movies movies={state.movies} openPopup={openPopup} />
+            )}
+
+            {state.errorMsg && (
+              <div className="empty-message">
+                <h3>{state.errorMsg}</h3>
+              </div>
+            )}
+          </>
         )}
         {state.selected.Title && (
           <Popup
