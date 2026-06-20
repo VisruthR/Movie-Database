@@ -5,7 +5,6 @@ import "./Watchlist.css";
 function Watchlist({ savedMovies, openPopup }) {
   const [currentTab, setCurrentTab] = useState("Watchlist");
   const [localInput, setLocalInput] = useState("");
-  const [search, setSearch] = useState("");
 
   const searchCode = /[^a-zA-Z0-9]/g;
 
@@ -13,23 +12,18 @@ function Watchlist({ savedMovies, openPopup }) {
     setCurrentTab(currentTab === "Watchlist" ? "Seen" : "Watchlist");
   };
 
-  const displayedMovies = search
+  const displayedMovies = localInput
     ? savedMovies.filter(
         (movie) =>
           movie.sect === currentTab &&
-          movie.Title.replace(searchCode, "").toLowerCase().includes(search),
+          movie.Title.replace(searchCode, "")
+            .toLowerCase()
+            .includes(localInput.replace(searchCode, "").toLowerCase()),
       )
     : savedMovies.filter((movie) => movie.sect === currentTab);
 
   const handleLocalInput = (e) => {
-    if (e.target.value === "") setSearch("");
     setLocalInput(e.target.value);
-  };
-
-  const handleSearch = (e) => {
-    if (e.key === "Enter") {
-      setSearch(localInput.replace(searchCode, "").toLowerCase());
-    }
   };
 
   return (
@@ -42,7 +36,6 @@ function Watchlist({ savedMovies, openPopup }) {
             placeholder="Filter movies..."
             className="localSearch"
             onChange={handleLocalInput}
-            onKeyDown={handleSearch}
             value={localInput}
           />
         </div>
